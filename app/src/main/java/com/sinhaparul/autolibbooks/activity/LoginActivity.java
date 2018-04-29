@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.i(Constants.LOG_TAG, "Mobile: " + mobile);
 
                         startActivity(new Intent(LoginActivity.this, SplashScreenActivity.class));
-                        //finish();
+                        finish();
 
                     }
                     else{

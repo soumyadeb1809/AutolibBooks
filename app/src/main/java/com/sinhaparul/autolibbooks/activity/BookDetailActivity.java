@@ -1,12 +1,15 @@
 package com.sinhaparul.autolibbooks.activity;
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -100,13 +103,31 @@ public class BookDetailActivity extends AppCompatActivity {
         fabDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadBook(book.getEBookUrl());
+                checkReqPermissions(book.getEBookUrl());
+
             }
         });
 
     }
 
+    private void checkReqPermissions(String eBookUrl) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                ) {
 
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE, }, 0);
+
+            Toast.makeText(this, "Please grant the requested permissions", Toast.LENGTH_SHORT).show();
+
+
+        } else {
+
+            downloadBook(eBookUrl);
+
+        }
+    }
 
 
     private void populateUI() {
