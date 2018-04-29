@@ -295,7 +295,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
     private void downloadBook(String eBookUrl) {
 
-        String url = Constants.IP + Constants.DIR + Constants.DIR_EBOOK + eBookUrl;
+        String url = eBookUrl;
 
         Log.i(Constants.LOG_TAG, "EBOOK: "+url);
 
