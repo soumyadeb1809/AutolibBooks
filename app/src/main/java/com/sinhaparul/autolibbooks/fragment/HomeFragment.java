@@ -1,22 +1,19 @@
-package com.soumyadeb.autolibbooks.fragment;
+package com.sinhaparul.autolibbooks.fragment;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.soumyadeb.autolibbooks.Constants;
-import com.soumyadeb.autolibbooks.R;
-import com.soumyadeb.autolibbooks.activity.MainActivity;
-import com.soumyadeb.autolibbooks.adapter.AuthorAdapter;
-import com.soumyadeb.autolibbooks.adapter.BookLibraryAdapter;
-import com.soumyadeb.autolibbooks.adapter.GenreAdapter;
+import com.sinhaparul.autolibbooks.R;
+import com.sinhaparul.autolibbooks.activity.MainActivity;
+import com.sinhaparul.autolibbooks.adapter.AuthorAdapter;
+import com.sinhaparul.autolibbooks.adapter.BookLibraryAdapter;
+import com.sinhaparul.autolibbooks.adapter.GenreAdapter;
 
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 

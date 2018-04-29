@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.soumyadeb.autolibbooks.activity.BookDetailActivity">
+    tools:context="com.sinhaparul.autolibbooks.activity.BookDetailActivity">
 
 
     <include layout="@layout/toolbar"/>
@@ -79,6 +79,8 @@
                 android:layout_alignBottom="@+id/image"
                 android:layout_toRightOf="@+id/image"
                 android:text="Add to favourites"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@android:color/white"
                 android:id="@+id/favourite"
                 />
 
@@ -119,6 +121,7 @@
             android:layout_height="64dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="28dp"
+            android:id="@+id/fab_download"
             android:src="@drawable/ic_download"
             android:clickable="true"
             />

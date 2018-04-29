@@ -1,4 +1,4 @@
-package com.soumyadeb.autolibbooks.activity;
+package com.sinhaparul.autolibbooks.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,12 +7,12 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
-import com.soumyadeb.autolibbooks.Constants;
-import com.soumyadeb.autolibbooks.R;
-import com.soumyadeb.autolibbooks.activity.MainActivity;
-import com.soumyadeb.autolibbooks.adapter.BookLibraryAdapter;
-import com.soumyadeb.autolibbooks.model.Book;
+import com.sinhaparul.autolibbooks.Constants;
+import com.sinhaparul.autolibbooks.R;
+import com.sinhaparul.autolibbooks.adapter.BookLibraryAdapter;
+import com.sinhaparul.autolibbooks.model.Book;
 
 import java.util.ArrayList;
 
@@ -26,6 +26,7 @@ public class FilterBooksActivity extends AppCompatActivity {
     private ArrayList<Book> bookList;
     private BookLibraryAdapter adapter;
     private ProgressDialog progress;
+    private TextView tvType,tvName;
 
     private ArrayList<Book> books;
 
@@ -33,6 +34,10 @@ public class FilterBooksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_books);
+
+        tvName = (TextView) findViewById(R.id.name);
+        tvType = (TextView) findViewById(R.id.type);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(null);
         setSupportActionBar(toolbar);
@@ -45,6 +50,9 @@ public class FilterBooksActivity extends AppCompatActivity {
 
         String type = intent.getStringExtra("type");
         String name = intent.getStringExtra("name");
+
+        tvName.setText(name);
+
         ArrayList<Book> data = intent.getParcelableArrayListExtra("data");
 
         bookList = getFilteredBooks(type, name, data);
@@ -66,6 +74,8 @@ public class FilterBooksActivity extends AppCompatActivity {
 
         if(type.equals(Constants.TYPE_AUTHOR)){
 
+            tvType.setText("Books by: ");
+
             for(int i = 0; i < data.size(); i++){
                 if(data.get(i).getAuthor().equals(name))
                     books.add(data.get(i));
@@ -73,6 +83,8 @@ public class FilterBooksActivity extends AppCompatActivity {
 
         }
         else if(type.equals(Constants.TYPE_GENRE)){
+
+            tvType.setText("Books of genre: ");
 
             for(int i = 0; i < data.size(); i++){
                 if(data.get(i).getGenre().equals(name))

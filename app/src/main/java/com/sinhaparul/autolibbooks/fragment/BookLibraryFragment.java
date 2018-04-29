@@ -1,4 +1,4 @@
-package com.soumyadeb.autolibbooks.fragment;
+package com.sinhaparul.autolibbooks.fragment;
 
 
 import android.app.ProgressDialog;
@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.soumyadeb.autolibbooks.activity.MainActivity;
-import com.soumyadeb.autolibbooks.model.Book;
-import com.soumyadeb.autolibbooks.R;
-import com.soumyadeb.autolibbooks.adapter.BookLibraryAdapter;
+import com.sinhaparul.autolibbooks.activity.MainActivity;
+import com.sinhaparul.autolibbooks.model.Book;
+import com.sinhaparul.autolibbooks.R;
+import com.sinhaparul.autolibbooks.adapter.BookLibraryAdapter;
 
 import java.util.ArrayList;
 

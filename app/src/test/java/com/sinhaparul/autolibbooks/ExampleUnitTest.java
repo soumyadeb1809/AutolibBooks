@@ -1,4 +1,4 @@
-package com.soumyadeb.autolibbooks;
+package com.sinhaparul.autolibbooks;
 
 import org.junit.Test;
 

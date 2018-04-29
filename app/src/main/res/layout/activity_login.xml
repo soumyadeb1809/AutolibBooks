@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.soumyadeb.autolibbooks.activity.LoginActivity">
+    tools:context="com.sinhaparul.autolibbooks.activity.LoginActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
         android:layout_height="80dp"
         android:src="@drawable/ic_library_white"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="36dp"
         android:id="@+id/logo"
         />
 
@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/grp_roll"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="36dp"
         android:layout_below="@id/label"
         android:paddingLeft="14dp"
         android:paddingRight="14dp"
@@ -118,14 +118,38 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="36dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="36dp"
+        android:layout_below="@+id/grp_pass"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/btn_login"
         android:text="Login to your account"
         android:backgroundTint="@color/pink"
         android:textColor="@android:color/white"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account yet?"
+        android:textColor="@android:color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_login"
+        android:layout_marginTop="36dp"
+        android:id="@+id/txt"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/txt"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/btn_register"
+        android:text="Register"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@color/colorPrimary"
         />
 
 </RelativeLayout>

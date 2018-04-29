@@ -1,4 +1,4 @@
-package com.soumyadeb.autolibbooks.activity;
+package com.sinhaparul.autolibbooks.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.soumyadeb.autolibbooks.Constants;
-import com.soumyadeb.autolibbooks.R;
+import com.sinhaparul.autolibbooks.Constants;
+import com.sinhaparul.autolibbooks.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // Declare the instances:
     private EditText etEmail, etPassword;
-    private Button btnLogin;
+    private Button btnLogin, btnRegister;
     private SharedPreferences sp;
     private ProgressDialog progress;
 
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.et_email);
         etPassword = (EditText) findViewById(R.id.et_password);
         btnLogin = (Button) findViewById(R.id.btn_login);
+        btnRegister = (Button) findViewById(R.id.btn_register);
 
         sp = getSharedPreferences(Constants.SP_NAME, MODE_PRIVATE);
         progress = new ProgressDialog(LoginActivity.this);
@@ -57,7 +59,30 @@ public class LoginActivity extends AppCompatActivity {
                 email = etEmail.getText().toString();
                 pass = etPassword.getText().toString();
 
-                loginUser(email, pass);
+                if(TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)){
+                    Toast.makeText(LoginActivity.this, "Please fill all the details and try again.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    if (!email.contains("@")) {
+                        Toast.makeText(LoginActivity.this, "Invalid email. Please try again", Toast.LENGTH_LONG).show();
+                        etEmail.setError("Invalid email.");
+                    }
+                    else if (pass.length() < 6) {
+                        Toast.makeText(LoginActivity.this, "Invalid password. Please try again", Toast.LENGTH_LONG).show();
+                        etPassword.setError("Invalid password.");
+                    }
+                    else {
+                        loginUser(email, pass);
+                    }
+                }
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                //finish();
             }
         });
 
@@ -121,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                         builder.setPositiveButton("OKAY", null);
                         builder.show();
                         etPassword.setText(null);
-                        etEmail.setText(null);
+                        //etEmail.setText(null);
                     }
 
 

@@ -1,4 +1,4 @@
-package com.soumyadeb.autolibbooks;
+package com.sinhaparul.autolibbooks;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,8 +1,12 @@
-package com.soumyadeb.autolibbooks.activity;
+package com.sinhaparul.autolibbooks.activity;
 
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,14 +24,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.soumyadeb.autolibbooks.Constants;
-import com.soumyadeb.autolibbooks.R;
-import com.soumyadeb.autolibbooks.model.Book;
+import com.sinhaparul.autolibbooks.Constants;
+import com.sinhaparul.autolibbooks.R;
+import com.sinhaparul.autolibbooks.model.Book;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +43,7 @@ public class BookDetailActivity extends AppCompatActivity {
     private TextView name, author, genre, summary;
     private ImageView image;
     private Button favourite;
+    private FloatingActionButton fabDownload;
 
     private ProgressDialog progress;
 
@@ -52,6 +58,8 @@ public class BookDetailActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(null);
         setSupportActionBar(toolbar);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         image = (ImageView) findViewById(R.id.image);
         name = (TextView) findViewById(R.id.name);
@@ -59,6 +67,7 @@ public class BookDetailActivity extends AppCompatActivity {
         genre = (TextView) findViewById(R.id.genre);
         summary = (TextView) findViewById(R.id.summary);
         favourite = (Button) findViewById(R.id.favourite);
+        fabDownload = (FloatingActionButton) findViewById(R.id.fab_download);
 
         progress = new ProgressDialog(this);
 
@@ -87,7 +96,17 @@ public class BookDetailActivity extends AppCompatActivity {
             }
         });
 
+
+        fabDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadBook(book.getEBookUrl());
+            }
+        });
+
     }
+
+
 
 
     private void populateUI() {
@@ -95,7 +114,8 @@ public class BookDetailActivity extends AppCompatActivity {
         name.setText(book.getBookName());
         author.setText(book.getAuthor());
         genre.setText(book.getGenre());
-        String thumbnail = Constants.IP + Constants.DIR + Constants.DIR_BOOK_IMG + book.getThumbnail();
+        //String thumbnail = Constants.IP + Constants.DIR + Constants.DIR_BOOK_IMG + book.getThumbnail();
+        String thumbnail = book.getThumbnail();
         Glide.with(this).load(thumbnail).placeholder(R.drawable.placeholder).into(image);
         int genreBack ;
         switch (book.getGenre()){
@@ -119,7 +139,7 @@ public class BookDetailActivity extends AppCompatActivity {
         }
 
         loadSummary();
-        
+
 
     }
 
@@ -181,6 +201,7 @@ public class BookDetailActivity extends AppCompatActivity {
             favObj.put("author", book.getAuthor());
             favObj.put("genre", book.getGenre());
             favObj.put("thumbnail", book.getThumbnail());
+            favObj.put("ebook_url", book.getEBookUrl());
 
             favArray.put(favObj);
 
@@ -205,7 +226,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
         progress.setMessage("Hang On! Loading Data...");
         progress.show();
-        
+
         String jsonData = sp.getString("fav_data", null);
         if(jsonData != null){
             try {
@@ -219,7 +240,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     }
                 }
 
-                
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -227,7 +248,7 @@ public class BookDetailActivity extends AppCompatActivity {
         }
 
         populateUI();
-        
+
     }
 
     private void removeFav(int index) {
@@ -247,9 +268,55 @@ public class BookDetailActivity extends AppCompatActivity {
             }
 
         }
-        
+
     }
 
 
+    private void downloadBook(String eBookUrl) {
+
+        String url = Constants.IP + Constants.DIR + Constants.DIR_EBOOK + eBookUrl;
+
+        Log.i(Constants.LOG_TAG, "EBOOK: "+url);
+
+        String storagePath = Environment.getExternalStorageDirectory()
+                .getPath()
+                + "/autolib/";
+
+        //Log.d("Strorgae in view",""+storagePath);
+
+        File f = new File(storagePath);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+
+        //storagePath.mkdirs();
+        String pathname = f.toString();
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+
+        DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+        //Uri uri = Uri.parse(url);
+        Uri uri = Uri.parse(url);
+
+
+
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.allowScanningByMediaScanner();
+
+        request.setTitle("Downloading: "+uri.getLastPathSegment());
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+        
+        if (uri.getLastPathSegment().endsWith("pdf"))
+            request.setMimeType("application/pdf");
+
+        request.setDestinationInExternalPublicDir("/autolib/", uri.getLastPathSegment());
+        Long referese = dm.enqueue(request);
+
+
+        Toast.makeText(getApplicationContext(), "Downloading...", Toast.LENGTH_SHORT).show();
+
+    }
 
 }

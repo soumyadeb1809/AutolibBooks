@@ -1,4 +1,4 @@
-package com.soumyadeb.autolibbooks.fragment;
+package com.sinhaparul.autolibbooks.fragment;
 
 
 import android.app.ProgressDialog;
@@ -12,11 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.soumyadeb.autolibbooks.Constants;
-import com.soumyadeb.autolibbooks.R;
-import com.soumyadeb.autolibbooks.activity.MainActivity;
-import com.soumyadeb.autolibbooks.adapter.BookLibraryAdapter;
-import com.soumyadeb.autolibbooks.model.Book;
+import com.sinhaparul.autolibbooks.Constants;
+import com.sinhaparul.autolibbooks.R;
+import com.sinhaparul.autolibbooks.adapter.BookLibraryAdapter;
+import com.sinhaparul.autolibbooks.model.Book;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,8 +83,9 @@ public class FavouriteFragment extends Fragment {
                     String author = obj.getString("author");
                     String genre = obj.getString("genre");
                     String thumbnail = obj.getString("thumbnail");
+                    String eBookUrl = obj.getString("ebook_url");
 
-                    Book book = new Book(id, name,author, genre, thumbnail);
+                    Book book = new Book(id, name,author, genre, thumbnail, eBookUrl);
                     bookList.add(book);
                     adapter.notifyDataSetChanged();
                 }

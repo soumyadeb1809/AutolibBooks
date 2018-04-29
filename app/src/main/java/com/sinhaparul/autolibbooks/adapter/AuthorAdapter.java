@@ -1,8 +1,9 @@
-package com.soumyadeb.autolibbooks.adapter;
+package com.sinhaparul.autolibbooks.adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.soumyadeb.autolibbooks.Constants;
-import com.soumyadeb.autolibbooks.R;
-import com.soumyadeb.autolibbooks.activity.FilterBooksActivity;
-import com.soumyadeb.autolibbooks.activity.MainActivity;
-import com.soumyadeb.autolibbooks.model.Author;
+import com.sinhaparul.autolibbooks.Constants;
+import com.sinhaparul.autolibbooks.R;
+import com.sinhaparul.autolibbooks.activity.FilterBooksActivity;
+import com.sinhaparul.autolibbooks.activity.MainActivity;
+import com.sinhaparul.autolibbooks.model.Author;
 
 import java.util.List;
 
@@ -56,7 +57,10 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         final Author author = authorList.get(position);
         holder.name.setText(author.getName());
 
-        String image = Constants.IP + Constants.DIR + Constants.DIR_AUTHOR_IMG + author.getImage();
+        //String image = Constants.IP + Constants.DIR + Constants.DIR_AUTHOR_IMG + author.getImage();
+        String image = author.getImage();
+
+        Log.i(Constants.LOG_TAG, "Author: "+image);
         Glide.with(mContext).load(image).placeholder(R.drawable.placeholder).into(holder.image);
 
         holder.v.setOnClickListener(new View.OnClickListener() {

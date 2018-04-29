@@ -17,10 +17,6 @@
         android:title="Favourites"
         android:icon="@drawable/ic_favorite"/>
 
-    <item
-        android:id="@+id/navigation_downloads"
-        android:title="Downloads"
-        android:icon="@drawable/ic_downloads_black"/>
 
 
     <item

@@ -1,4 +1,4 @@
-package com.soumyadeb.autolibbooks.adapter;
+package com.sinhaparul.autolibbooks.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,11 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.soumyadeb.autolibbooks.Constants;
-import com.soumyadeb.autolibbooks.R;
-import com.soumyadeb.autolibbooks.activity.FilterBooksActivity;
-import com.soumyadeb.autolibbooks.activity.MainActivity;
-import com.soumyadeb.autolibbooks.model.Genre;
+import com.sinhaparul.autolibbooks.Constants;
+import com.sinhaparul.autolibbooks.R;
+import com.sinhaparul.autolibbooks.activity.FilterBooksActivity;
+import com.sinhaparul.autolibbooks.activity.MainActivity;
+import com.sinhaparul.autolibbooks.model.Genre;
 
 import java.util.List;
 
@@ -61,7 +61,9 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.MyViewHolder
 
         //Log.i(Constants.LOG_TAG, "Thumb: "+genre.getImage());
 
-        String thumbnail = Constants.IP + Constants.DIR + Constants.DIR_GENRE_IMG + genre.getImage();
+        //String thumbnail = Constants.IP + Constants.DIR + Constants.DIR_GENRE_IMG + genre.getImage();
+        String thumbnail = genre.getImage();
+
         Glide.with(mContext).load(thumbnail).placeholder(R.drawable.placeholder).into(holder.image);
        // holder.thumbnail.setImageResource(album.getThumbnail());
         int genreBack ;

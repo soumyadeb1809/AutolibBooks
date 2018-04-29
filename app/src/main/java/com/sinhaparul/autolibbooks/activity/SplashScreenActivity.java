@@ -1,14 +1,16 @@
-package com.soumyadeb.autolibbooks.activity;
+package com.sinhaparul.autolibbooks.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Rect;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,9 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.soumyadeb.autolibbooks.Constants;
-import com.soumyadeb.autolibbooks.R;
-import com.soumyadeb.autolibbooks.model.Book;
+import com.sinhaparul.autolibbooks.Constants;
+import com.sinhaparul.autolibbooks.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,19 +31,23 @@ public class SplashScreenActivity extends AppCompatActivity {
     // Declare the instances:
     private SharedPreferences sp;
 
+    private ProgressBar progressBar;
+    private TextView offline;
+
+    private static final int SPLASH_TIME_OUT = 2000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        offline = (TextView) findViewById(R.id.offline);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         // Initialize the instances:
         sp = getSharedPreferences(Constants.SP_NAME, MODE_PRIVATE);
 
         // Check if user is logged in:
         checkUserLogin();
-
-
-
 
     }
 
@@ -55,7 +60,16 @@ public class SplashScreenActivity extends AppCompatActivity {
             finish();
         }
         else {
-            fetchData();
+
+            if(isNetworkAvailable()) {
+
+                fetchData();
+            }
+            else {
+                Toast.makeText(this, "No network connection", Toast.LENGTH_LONG).show();
+                offline.setVisibility(View.VISIBLE);
+                startSplash();
+            }
         }
     }
 
@@ -90,8 +104,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                     editor.apply();
 
-                    startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
-                    finish();
+                    startSplash();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -108,6 +121,35 @@ public class SplashScreenActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(stringRequest);
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void startSplash() {
+
+        progressBar.setVisibility(View.INVISIBLE);
+
+        new Handler().postDelayed(new Runnable() {
+
+            /*
+             * Showing splash screen with a timer. This will be useful when you
+             * want to show case your app logo / company
+             */
+
+            @Override
+            public void run() {
+                // This method will be executed once the timer is over
+                // Start your app main activity
+                startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
+                finish();
+
+            }
+        }, SPLASH_TIME_OUT);
     }
 
 

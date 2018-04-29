@@ -1,7 +1,7 @@
-package com.soumyadeb.autolibbooks.model;
+package com.sinhaparul.autolibbooks.model;
 
 /**
- * Created by Soumya Deb on 14-04-2018.
+ * Created by Parul Sinha on 14-04-2018.
  */
 
 public class Author {

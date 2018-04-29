@@ -1,4 +1,4 @@
-package com.soumyadeb.autolibbooks.activity;
+package com.sinhaparul.autolibbooks.activity;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -6,19 +6,19 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.soumyadeb.autolibbooks.Constants;
-import com.soumyadeb.autolibbooks.DownloadsFragment;
-import com.soumyadeb.autolibbooks.R;
-import com.soumyadeb.autolibbooks.fragment.BookLibraryFragment;
-import com.soumyadeb.autolibbooks.fragment.FavouriteFragment;
-import com.soumyadeb.autolibbooks.fragment.HomeFragment;
-import com.soumyadeb.autolibbooks.fragment.ProfileFragment;
-import com.soumyadeb.autolibbooks.model.Author;
-import com.soumyadeb.autolibbooks.model.Book;
-import com.soumyadeb.autolibbooks.model.Genre;
+import com.sinhaparul.autolibbooks.Constants;
+import com.sinhaparul.autolibbooks.R;
+import com.sinhaparul.autolibbooks.fragment.BookLibraryFragment;
+import com.sinhaparul.autolibbooks.fragment.FavouriteFragment;
+import com.sinhaparul.autolibbooks.fragment.HomeFragment;
+import com.sinhaparul.autolibbooks.fragment.ProfileFragment;
+import com.sinhaparul.autolibbooks.model.Author;
+import com.sinhaparul.autolibbooks.model.Book;
+import com.sinhaparul.autolibbooks.model.Genre;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,9 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content, new FavouriteFragment()).commit();
                         return true;
 
-                    case R.id.navigation_downloads:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content, new DownloadsFragment()).commit();
-                        return true;
+
                 }
             }
             setSupportActionBar(toolbar);
@@ -95,6 +93,11 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.content, new HomeFragment()).commit();
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        Log.i(Constants.LOG_TAG, "Width :"+displayMetrics.widthPixels);
+
 
     }
 
@@ -122,8 +125,9 @@ public class MainActivity extends AppCompatActivity {
                         String author = bookObj.getString("book_author");
                         String genre = bookObj.getString("book_genre");
                         String thumbnail = bookObj.getString("thumbnail");
+                        String eBookUrl = bookObj.getString("ebook_url");
 
-                        Book book = new Book(id, name, author, genre, thumbnail);
+                        Book book = new Book(id, name, author, genre, thumbnail, eBookUrl);
                         bookList.add(book);
                     }
                 }
@@ -137,8 +141,9 @@ public class MainActivity extends AppCompatActivity {
                         String author = bookObj.getString("book_author");
                         String genre = bookObj.getString("book_genre");
                         String thumbnail = bookObj.getString("thumbnail");
+                        String eBookUrl = bookObj.getString("ebook_url");
 
-                        Book book = new Book(id, name, author, genre, thumbnail);
+                        Book book = new Book(id, name, author, genre, thumbnail, eBookUrl);
                         featuredBookList.add(book);
                     }
                 }

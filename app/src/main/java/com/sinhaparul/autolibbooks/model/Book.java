@@ -1,21 +1,22 @@
-package com.soumyadeb.autolibbooks.model;
+package com.sinhaparul.autolibbooks.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Soumya Deb on 08-04-2018.
+ * Created by Parul Sinha on 08-04-2018.
  */
 
 public class Book implements Parcelable{
-    private String id, bookName, author, genre, thumbnail;
+    private String id, bookName, author, genre, thumbnail, eBookUrl;
 
-    public Book(String id, String bookName, String author, String genre, String thumbnail) {
+    public Book(String id, String bookName, String author, String genre, String thumbnail, String eBookUrl) {
         this.id = id;
         this.bookName = bookName;
         this.author = author;
         this.genre = genre;
         this.thumbnail = thumbnail;
+        this.eBookUrl = eBookUrl;
     }
 
     public String getBookName() {
@@ -38,6 +39,9 @@ public class Book implements Parcelable{
         return id;
     }
 
+    public String getEBookUrl() {
+        return eBookUrl;
+    }
 
     // In constructor you will read the variables from Parcel. Make sure to read them in the same sequence in which you have written them in Parcel.
     public Book(Parcel in) {
@@ -46,6 +50,7 @@ public class Book implements Parcelable{
         author = in.readString();
         genre = in.readString();
         thumbnail = in.readString();
+        eBookUrl = in.readString();
     }
 
     @Override
@@ -62,6 +67,7 @@ public class Book implements Parcelable{
         dest.writeString(author);
         dest.writeString(genre);
         dest.writeString(thumbnail);
+        dest.writeString(eBookUrl);
     }
     // This is to de-serialize the object
     public static final Parcelable.Creator<Book> CREATOR = new Parcelable.Creator<Book>(){
